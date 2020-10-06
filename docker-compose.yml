@@ -13,7 +13,6 @@ services:
     container_name: laravel-php
     depends_on:
       - db
-    restart: always
     volumes:
       - ./:/var/www/backend
       - ./docker/php/conf.d/php.dev.ini/:/usr/local/etc/php/conf.d/laravel.ini

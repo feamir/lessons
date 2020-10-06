@@ -20,12 +20,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN ln -s $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
 COPY docker/php/conf.d/php.prod.ini $PHP_INI_DIR/conf.d/php.ini
 
-RUN set -eux; \
-	{ \
-		echo '[www]'; \
-		echo 'ping.path = /ping'; \
-	} | tee /usr/local/etc/php-fpm.d/docker-healthcheck.conf
-
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 ENV PATH="${PATH}:/root/.composer/vendor/bin"
@@ -33,7 +27,7 @@ ENV PATH="${PATH}:/root/.composer/vendor/bin"
 WORKDIR /var/www/backend
 
 # prevent the reinstallation of vendors at every changes in the source code
-COPY composer.json composer.lock ./
+COPY composer.json ./
 
 # do not use .env files in production
 COPY . ./
